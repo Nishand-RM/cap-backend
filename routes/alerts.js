@@ -5,4 +5,4 @@ const { createUser, sendAlerts } = require('../controllers/alertController');
 router.post('/subscribe', createUser);
 router.post('/send', sendAlerts);
 
-module.exports = router;
+ module.exports = router;
