@@ -12,6 +12,13 @@ dotenv.config();
 
 const app = express();
 
+// backend/server.js
+
+app.use(cors({
+    origin: 'http://localhost:5173', // Frontend URL
+  }));
+  
+
 // Middleware
 app.use(cors());
 app.use(express.json());
@@ -26,7 +33,7 @@ mongoose
     .then(() => {
         console.log('✅ MongoDB connected');
         app.listen(5000, () => {
-            console.log(`Server running on port ${PORT}`);
+            console.log(`Server running on port: 5000`);
         });
         scheduleAlerts();
     })
@@ -34,5 +41,4 @@ mongoose
         console.error('❌ MongoDB connection error:', err);
     });
 
-const PORT = process.env.PORT || 5000;
 
