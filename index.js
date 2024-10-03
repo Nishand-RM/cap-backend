@@ -1,26 +1,38 @@
+// backend/server.js
+
 const express = require('express');
 const mongoose = require('mongoose');
-const bodyParser = require('body-parser');
-const alertRoutes = require('./routes/alerts');
-require('dotenv').config();
+const cors = require('cors');
+const dotenv = require('dotenv');
+const userRoutes = require('./routes/users');
+const newsRoutes = require('./routes/news');
+const { scheduleAlerts } = require('./controllers/newsController');
+
+dotenv.config();
 
 const app = express();
 
+// Middleware
+app.use(cors());
+app.use(express.json());
 
-app.use(bodyParser.json());
-app.use('/api/alerts', alertRoutes);
+// Routes
+app.use('/api/users', userRoutes);
+app.use('/api/news', newsRoutes);
 
-mongoose.connect(process.env.MONGO_URI)
-
-.then(() => {
-    console.log("Connected to the MongoDB database");
-
-    // start the server by listening on a port for incoming requests
-    app.listen(5000, () => {
-        console.log("Server is running on http://localhost:5000");  
+// Connect to MongoDB and start the server
+mongoose
+    .connect(process.env.MONGODB_URI)
+    .then(() => {
+        console.log('✅ MongoDB connected');
+        app.listen(5000, () => {
+            console.log(`Server running on port ${PORT}`);
+        });
+        scheduleAlerts();
+    })
+    .catch((err) => {
+        console.error('❌ MongoDB connection error:', err);
     });
-})  
-.catch((err) => {
-    console.log("Error connecting to the MongoDB database", err);
-});
+
+const PORT = process.env.PORT || 5000;
 
