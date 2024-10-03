@@ -1,12 +1,19 @@
+// backend/models/User.js
+
 const mongoose = require('mongoose');
 
-const UserSchema = new mongoose.Schema({
-  email: { type: String, required: true },
+const userSchema = new mongoose.Schema({
+  email: { type: String, required: true, unique: true },
   preferences: {
-    categories: [String],
+    categories: {
+      type: [String],
+      enum: ['politics', 'sports', 'technology', 'business', 'health', 'entertainment'],
+      default: ['politics', 'sports', 'technology'],
+    },
     frequency: { type: String, enum: ['immediate', 'hourly', 'daily'], default: 'immediate' },
-    notificationType: { type: String, enum: ['email', 'sms', 'push'], default: 'email' },
+    notificationTypes: { type: [String], enum: ['email'], default: ['email'] }, // Extendable for SMS, Push
   },
+  createdAt: { type: Date, default: Date.now },
 });
 
-module.exports = mongoose.model('User', UserSchema);
+module.exports = mongoose.model('User', userSchema);
