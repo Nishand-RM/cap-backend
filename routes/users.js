@@ -1,0 +1,16 @@
+// backend/routes/users.js
+
+const express = require('express');
+const router = express.Router();
+const { createUser, updatePreferences, getAllUsers } = require('../controllers/userController');
+
+// Create a new user
+router.post('/', createUser);
+
+// Update user preferences
+router.put('/:id/preferences', updatePreferences);
+
+// Get all users (optional)
+router.get('/', getAllUsers);
+
+module.exports = router;
