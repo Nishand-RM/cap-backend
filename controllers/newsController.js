@@ -4,6 +4,7 @@ const User = require('../models/User');
 const fetchNews = require('../utils/newsFetcher');
 const sendEmail = require('../utils/emailService');
 const cron = require('node-cron');
+const Notification = require('../models/Notification'); // Import Notification model
 
 // Helper function to send alerts to a group of users
 const sendAlertsForGroup = async (users, frequency) => {
@@ -42,6 +43,20 @@ const sendAlertsForGroup = async (users, frequency) => {
         try {
           await sendEmail(user.email, subject, htmlContent);
           console.log(`✅ Email sent to ${user.email}`);
+
+          // Create a Notification entry
+          const notification = new Notification({
+            userEmail: user.email,
+            title: subject,
+            description: `You have received ${filteredNews.length} new articles in the categories: ${categories.join(
+              ', '
+            )}.`,
+            category: categories.join(', '),
+            url: '', // Optional: You can set a URL if needed
+          });
+
+          await notification.save();
+          console.log(`✅ Notification saved for ${user.email}`);
         } catch (emailError) {
           console.error(`❌ Failed to send email to ${user.email}:`, emailError);
         }
@@ -101,3 +116,31 @@ exports.getNews = async (req, res) => {
     res.status(500).json({ message: 'Failed to fetch news.' });
   }
 };
+
+
+
+
+
+// backend/controllers/newsController.js
+
+exports.getNotifications = async (req, res) => {
+  try {
+    let { email } = req.query;
+
+    if (!email) {
+      return res.status(400).json({ message: 'Email query parameter is required.' });
+    }
+
+    email = email.toLowerCase(); // Convert to lowercase
+
+    const notifications = await Notification.find({ userEmail: email }).sort({ sentAt: -1 });
+
+    res.status(200).json(notifications);
+  } catch (error) {
+    console.error('Error fetching notifications:', error);
+    res.status(500).json({ message: 'Failed to fetch notifications.' });
+  }
+};
+
+
+

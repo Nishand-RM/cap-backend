@@ -2,7 +2,7 @@
 
 const express = require('express');
 const router = express.Router();
-const { createUser, updatePreferences, getAllUsers } = require('../controllers/userController');
+const { createUser, updatePreferences, getAllUsers, getUserByEmail } = require('../controllers/userController');
 
 // Create a new user
 router.post('/', createUser);
@@ -12,5 +12,8 @@ router.put('/:id/preferences', updatePreferences);
 
 // Get all users (optional)
 router.get('/', getAllUsers);
+
+// Get user by email
+router.get('/by-email', getUserByEmail);
 
 module.exports = router;
