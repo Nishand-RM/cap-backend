@@ -124,6 +124,7 @@ exports.getNotifications = async (req, res) => {
     }
 
     email = email.toLowerCase(); 
+    
 
     const notifications = await Notification.find({ userEmail: email }).sort({ sentAt: -1 });
 
