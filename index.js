@@ -12,16 +12,25 @@ dotenv.config();
 
 const app = express();
 
-// backend/server.js
-
-app.use(cors({
-    origin: 'http://localhost:5173', // Frontend URL
-  }));
-  
-
 // Middleware
 app.use(cors());
 app.use(express.json());
+
+const allowedOrigins = process.env.ALLOWED_ORIGINS.split(',');
+
+app.use(cors({
+    origin: function (origin, callback) {
+        if (!origin) return callback(null, true);
+        if (allowedOrigins.indexOf(origin) === -1) {
+          const msg = `The CORS policy for this site does not allow access from the specified Origin: ${origin}`;
+          return callback(new Error(msg), false);
+        }
+        return callback(null, true);
+      },
+      methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
+      allowedHeaders: ['Content-Type', 'Authorization'],
+    }));
+    
 
 // Routes
 app.use('/api/users', userRoutes);
