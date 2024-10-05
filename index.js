@@ -1,4 +1,4 @@
-// backend/server.js
+// backend/index.js
 
 const express = require('express');
 const mongoose = require('mongoose');
@@ -13,7 +13,7 @@ dotenv.config();
 const app = express();
 
 // Middleware
-app.use(cors());
+
 app.use(express.json());
 
 const allowedOrigins = process.env.ALLOWED_ORIGINS.split(',');
