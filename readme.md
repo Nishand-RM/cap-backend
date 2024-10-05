@@ -1,11 +1,11 @@
 POSTMAN ENDPOINTS:
 
 
-https://cap-backend-project.onrender.com
+https://cap-backend-newsproject.onrender.com
 
 
 1. creating users prefernece in news 
-https://cap-backend-project.onrender.com/api/users (POST)
+https://cap-backend-newsproject.onrender.com/api/users (POST)
 
 {
   "email": "ji@example.com",
@@ -18,31 +18,30 @@ https://cap-backend-project.onrender.com/api/users (POST)
 ------------------------------------------------------------------------------------
 
 2. update user information through user id
-
-https://cap-backend-project.onrender.com/api/users/:id (PUT)
+https://cap-backend-newsproject.onrender.com/api/users/:id (PUT)
 
 --------------------------------------------------------------------------------------
 3.fetching user details
 
-https://cap-backend-project.onrender.com/api/users (GET)
+https://cap-backend-newsproject.onrender.com/api/users (GET)
 
 --------------------------------------------------------------------------------------
 
 4.fetching news from news.api
 
-https://cap-backend-project.onrender.com/api/news (GET)
+https://cap-backend-newsproject.onrender.com/api/news (GET)
 
 --------------------------------------------------------------------------------------
 
 5.manually triggering for notification - for all users
 
-https://cap-backend-project.onrender.com/api/news/alerts (POST)
+https://cap-backend-newsproject.onrender.com/api/news/alerts (POST)
 
 --------------------------------------------------------------------------------------
 
 6. manually trigerring notification for particular user  
 
-https://cap-backend-project.onrender.com/api/news/notifications?email=vinay@gmail.com (GET)
+https://cap-backend-newsproject.onrender.com/api/news/notifications?email=vinay@gmail.com (GET)
 
 -----------------------------------------------------------------------------------------------------
 
@@ -53,3 +52,8 @@ and also tried in postman and stored the data in mongodb
 
 3. Then manually triggering the notification, once it is triggered it store the notification details in Mongodb (Notification -- collection) 
 and gets updated in Notification History in the UI.
+
+
+
+
+the code is working fine with postman and in UI getting error with corp connection tried a lot,but still getting issue in that connection.
