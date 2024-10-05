@@ -2,10 +2,14 @@
 
 const User = require('../models/User');
 
-// Create a new user with preferences
 exports.createUser = async (req, res) => {
   try {
     const { email, preferences } = req.body;
+
+    // Validate input
+    if (!email || !preferences) {
+      return res.status(400).json({ message: 'Email and preferences are required.' });
+    }
 
     // Check if user already exists
     const existingUser = await User.findOne({ email });
@@ -15,7 +19,7 @@ exports.createUser = async (req, res) => {
 
     const user = new User({ email, preferences });
     await user.save();
-    res.status(201).json(user);
+    res.status(201).json({ email: user.email });
   } catch (error) {
     console.error('Error creating user:', error);
     res.status(500).json({ message: 'Server error while creating user.' });

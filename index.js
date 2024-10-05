@@ -10,17 +10,18 @@ dotenv.config();
 
 const app = express();
 
-// Middleware
+// Middleware to parse JSON
 app.use(express.json());
 
-// Process allowed origins from environment
+// Process allowed origins from environment and trim any accidental spaces
 const allowedOrigins = process.env.ALLOWED_ORIGINS.split(',').map(origin => origin.trim());
 
 app.use(cors({
     origin: function (origin, callback) {
-        if (!origin) return callback(null, true); // allow requests with no origin (e.g., mobile apps)
+        // Allow requests with no origin (like mobile apps or curl requests)
+        if (!origin) return callback(null, true);
         if (allowedOrigins.indexOf(origin) === -1) {
-            const msg = `The CORS policy for this site does not allow access from the specified origin: ${origin}`;
+            const msg = `The CORS policy for this site does not allow access from the specified Origin: ${origin}`;
             return callback(new Error(msg), false);
         }
         return callback(null, true);
