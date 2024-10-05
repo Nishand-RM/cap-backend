@@ -1,5 +1,3 @@
-// backend/routes/users.js
-
 const express = require('express');
 const router = express.Router();
 const { createUser, updatePreferences, getAllUsers, getUserByEmail } = require('../controllers/userController');
@@ -10,7 +8,7 @@ router.post('/', createUser);
 // Update user preferences
 router.put('/:id/preferences', updatePreferences);
 
-// Get all users (optional)
+// Get all users 
 router.get('/', getAllUsers);
 
 // Get user by email

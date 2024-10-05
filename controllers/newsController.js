@@ -1,10 +1,8 @@
-// backend/controllers/newsController.js
-
 const User = require('../models/User');
 const fetchNews = require('../utils/newsFetcher');
 const sendEmail = require('../utils/emailService');
 const cron = require('node-cron');
-const Notification = require('../models/Notification'); // Import Notification model
+const Notification = require('../models/Notification');
 
 // Helper function to send alerts to a group of users
 const sendAlertsForGroup = async (users, frequency) => {
@@ -19,7 +17,7 @@ const sendAlertsForGroup = async (users, frequency) => {
         categories.includes(article.category.toLowerCase())
       );
 
-      if (filteredNews.length === 0) continue; // Skip if no relevant news
+      if (filteredNews.length === 0) continue; 
 
       const subject = `Your ${frequency.charAt(0).toUpperCase() + frequency.slice(1)} News Alerts`;
       const htmlContent = `
@@ -52,7 +50,7 @@ const sendAlertsForGroup = async (users, frequency) => {
               ', '
             )}.`,
             category: categories.join(', '),
-            url: '', // Optional: You can set a URL if needed
+            url: '', 
           });
 
           await notification.save();
@@ -117,12 +115,6 @@ exports.getNews = async (req, res) => {
   }
 };
 
-
-
-
-
-// backend/controllers/newsController.js
-
 exports.getNotifications = async (req, res) => {
   try {
     let { email } = req.query;
@@ -131,7 +123,7 @@ exports.getNotifications = async (req, res) => {
       return res.status(400).json({ message: 'Email query parameter is required.' });
     }
 
-    email = email.toLowerCase(); // Convert to lowercase
+    email = email.toLowerCase(); 
 
     const notifications = await Notification.find({ userEmail: email }).sort({ sentAt: -1 });
 

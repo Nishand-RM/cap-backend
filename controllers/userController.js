@@ -52,9 +52,6 @@ exports.getAllUsers = async (req, res) => {
   }
 };
 
-
-// backend/controllers/userController.js
-
 // Get user by email
 exports.getUserByEmail = async (req, res) => {
   try {
